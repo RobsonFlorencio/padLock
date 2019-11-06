@@ -1,28 +1,14 @@
-//This example code is in the Public Domain (or CC0 licensed, at your option.)
-//By Evandro Copercini - 2018
-//
-//This example creates a bridge between Serial and Classical Bluetooth (SPP)
-//and also demonstrate that SerialBT have the same functionalities of a normal Serial
-
-#include "BluetoothSerial.h"
+  
 #include <WiFi.h>
 #include <HTTPClient.h>
-
-#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
-#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
-#endif
-
+ 
 const char* ssid = "RafaelArthur";
 const char* password =  "meupia03";
-
-
-BluetoothSerial SerialBT;
-
+ 
 void setup() {
+ 
   Serial.begin(115200);
-  SerialBT.begin("ESP32test"); //Bluetooth device name
-  Serial.println("The device started, now you can pair it with bluetooth!");
-    delay(4000);   //Delay needed before calling the WiFi.begin
+  delay(4000);   //Delay needed before calling the WiFi.begin
  
   WiFi.begin(ssid, password); 
  
@@ -32,20 +18,13 @@ void setup() {
   }
  
   Serial.println("Connected to the WiFi network");
+ 
 }
 
 void loop() {
-  
- if(WiFi.status()== WL_CONNECTED){
-  if (Serial.available()) {
-    int dadosBluetooth = Serial.read();
-    SerialBT.write(dadosBluetooth);
-  }
-  if (SerialBT.available()) {
-    Serial.write(SerialBT.read());
-  }
-
-   
+ 
+ if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
+ 
    HTTPClient http;   
  
    http.begin("http://192.168.1.8:8080/cadastro");  //Specify destination for HTTP request
@@ -74,5 +53,7 @@ void loop() {
     Serial.println("Error in WiFi connection");   
  
  }
-  delay(10000);
+ 
+  delay(10000);  //Send a request every 10 seconds
+ 
 }
