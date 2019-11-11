@@ -27,10 +27,10 @@ void loop() {
  
    HTTPClient http;   
  
-   http.begin("http://192.168.1.8:8080/cadastro");  //Specify destination for HTTP request
-   http.addHeader("Content-Type", "text/plain");             //Specify content-type header
+   http.begin("http://192.168.1.6:8080/acesso/pessoa");  //Specify destination for HTTP request
+   http.addHeader("Content-Type", "application/json");             //Specify content-type header
  
-   int httpResponseCode = http.POST("POSTING from ESP32");   //Send the actual POST request
+   int httpResponseCode = http.POST("{\"email\":\"teste\",\"senha\":\"123\"}");   //Send the actual POST request
  
    if(httpResponseCode>0){
  
@@ -54,6 +54,6 @@ void loop() {
  
  }
  
-  delay(10000);  //Send a request every 10 seconds
+  delay(100000);  //Send a request every 10 seconds
  
 }
