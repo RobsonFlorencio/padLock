@@ -73,7 +73,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
          // Do stuff based on the command received from the app
              HTTPClient http;   
  
-             http.begin("http://192.168.1.11:8080/acesso/pessoa");  //Specify destination for HTTP request
+             http.begin("http://192.168.1.5:8080/acesso/pessoa");  //Specify destination for HTTP request
              http.addHeader("Content-Type", "application/json");             //Specify content-type header
            
              int httpResponseCode = http.POST(rxValue.data());   //Send the actual POST request
@@ -84,6 +84,13 @@ class MyCallbacks: public BLECharacteristicCallbacks {
            
               Serial.println(httpResponseCode);   //Print return code
               Serial.println(response);           //Print request answer
+              if(response.equals("true")){
+                // Acionar o motor
+                Serial.print("Acionando o motor!");
+              }else{
+                Serial.print("Turning ON!");
+                digitalWrite(LED, HIGH);
+              }
            
              }else{
            
@@ -159,6 +166,8 @@ void setup() {
 }
 
 void loop() {
+  Serial.print("Turning OFF!");
+  digitalWrite(LED, LOW);
   if (deviceConnected) {
     // Fabricate some arbitrary junk for now...
     txValue = analogRead(readPin) / 3.456; // This could be an actual sensor reading!
