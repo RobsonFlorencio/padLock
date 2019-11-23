@@ -28,6 +28,12 @@
  
 const char* ssid = "RafaelArthur";
 const char* password =  "meupia03";
+//const char* ssid = "iPhone";
+//const char* password =  "senhavila1";
+
+// Motor A
+int motor1Pin1 = 27; 
+int motor1Pin2 = 26; 
 
 BLECharacteristic *pCharacteristic;
 bool deviceConnected = false;
@@ -73,7 +79,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
          // Do stuff based on the command received from the app
              HTTPClient http;   
  
-             http.begin("http://192.168.1.5:8080/acesso/pessoa");  //Specify destination for HTTP request
+             http.begin("http://192.168.1.15:8080/acesso/pessoa");  //Specify destination for HTTP request
              http.addHeader("Content-Type", "application/json");             //Specify content-type header
            
              int httpResponseCode = http.POST(rxValue.data());   //Send the actual POST request
@@ -87,15 +93,42 @@ class MyCallbacks: public BLECharacteristicCallbacks {
               if(response.equals("true")){
                 // Acionar o motor
                 Serial.print("Acionando o motor!");
+
+                Serial.print("Abrindo!");
+                  digitalWrite(motor1Pin1, LOW);
+                  digitalWrite(motor1Pin2, HIGH);
+                  delay(2000);
+                
+                Serial.print("Fechando!");
+                  digitalWrite(motor1Pin1, HIGH);
+                  digitalWrite(motor1Pin2, LOW); 
+                  delay(2000);
+
+                Serial.print("Fechada!");
+                  digitalWrite(motor1Pin1, LOW);
+                  digitalWrite(motor1Pin2, LOW);
               }else{
-                Serial.print("Turning ON!");
+                Serial.println("Turning ON!");
                 digitalWrite(LED, HIGH);
+
+                delay(2000);
+
+                Serial.println("Turning OFF!");
+                digitalWrite(LED, LOW);
               }
            
              }else{
            
               Serial.print("Error on sending POST: ");
               Serial.println(httpResponseCode);
+
+              Serial.println("Turning ON!");
+              digitalWrite(LED, HIGH);
+
+              delay(2000);
+
+              Serial.println("Turning OFF!");
+              digitalWrite(LED, LOW);
            
              }
            
@@ -118,6 +151,10 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 };
 
 void setup() {
+  // sets the pins as outputs:
+  pinMode(motor1Pin1, OUTPUT);
+  pinMode(motor1Pin2, OUTPUT);
+  
   Serial.begin(115200);
   delay(4000);   //Delay needed before calling the WiFi.begin
  
@@ -166,8 +203,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("Turning OFF!");
-  digitalWrite(LED, LOW);
   if (deviceConnected) {
     // Fabricate some arbitrary junk for now...
     txValue = analogRead(readPin) / 3.456; // This could be an actual sensor reading!
