@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    android:gravity="center"
+    android:padding="40dp">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_phone_lock_black"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        android:textAllCaps="true"
+        android:letterSpacing="0.3"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Para utilizar o PadLock, é necessário sincronizar o dispositivo com o seu smartphone. Para isso, basta ficar a um metro de distância do dispositivo e clicar no botão de sincronização abaixo. Este procedimento será realizado apenas na primeira conexão"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="30dp"
+        android:textAlignment="center"
+        android:textSize="14sp"/>
+
+    <Button
+        android:id="@+id/btnSincronizar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sincronizar"
+        android:textColor="@android:color/white"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="50dp"/>
+
+</LinearLayout>
